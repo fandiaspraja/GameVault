@@ -18,7 +18,7 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Versi Xcode
         run: xcodebuild -version
@@ -98,7 +98,7 @@ jobs:
     name: Code Style (SwiftLint)
     runs-on: macos-26
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Pasang SwiftLint
         run: brew install swiftlint
@@ -111,7 +111,7 @@ jobs:
     name: Vulnerability Scan (OSV)
     runs-on: macos-26
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Pasang OSV-Scanner
         run: brew install osv-scanner

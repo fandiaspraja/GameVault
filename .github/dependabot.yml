@@ -1,8 +1,13 @@
-# Pemantauan versi & kerentanan dependensi (Swift Package Manager + GitHub Actions)
+# Pemantauan versi & kerentanan dependensi
 version: 2
 updates:
   - package-ecosystem: "swift"
-    directory: "/"
+    directories:
+      - "/Modules/Common"
+      - "/Modules/Game"
+      - "/Modules/Detail"
+      - "/Modules/Favorite"
+      - "/Modules/About"
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"

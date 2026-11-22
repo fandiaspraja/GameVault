@@ -13,7 +13,6 @@ public struct GameModel: Identifiable, Equatable, Hashable {
   public let rating: Double
   public let releaseDate: Date?
   public let genre: String?
-
 }
 
 /// Satu halaman hasil daftar gim.

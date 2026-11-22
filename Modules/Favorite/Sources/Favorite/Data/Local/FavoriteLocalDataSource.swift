@@ -17,7 +17,6 @@ public struct FavoriteGameEntity: Equatable {
   public let released: String?
   public let genre: String?
   public let addedAt: Date
-
 }
 
 /// Implementasi `LocalDataSource` (GameVaultCore) dengan Core Data + Combine.

@@ -1,0 +1,82 @@
+/* Umum */
+"general.untitled" = "Tanpa judul";
+"general.tba" = "TBA";
+"general.ok" = "OK";
+"general.error.title" = "Terjadi Kesalahan";
+"general.retry" = "Coba Lagi";
+"general.load.failed" = "Gagal memuat data";
+"general.rating.accessibility" = "Rating %@ dari 5";
+
+/* Tab */
+"tab.home" = "Beranda";
+"tab.favorite" = "Favorit";
+"tab.about" = "Tentang";
+
+/* Beranda */
+"home.title" = "GameVault";
+"home.search.prompt" = "Cari gim…";
+"home.genre.all" = "Semua";
+"home.sort" = "Urutkan";
+"home.sort.relevance" = "Relevan";
+"home.sort.popular" = "Terpopuler";
+"home.sort.rating" = "Rating tertinggi";
+"home.sort.newest" = "Rilis terbaru";
+"home.sort.name" = "Nama (A–Z)";
+"home.empty.search.title" = "Tidak ada hasil";
+"home.empty.search.message" = "Tidak ada gim yang cocok dengan “%@”.";
+"home.empty.title" = "Belum ada gim";
+"home.empty.message" = "Tidak ada gim untuk filter ini.";
+
+/* Detail */
+"detail.title" = "Detail";
+"detail.loading" = "Memuat detail…";
+"detail.reviews" = "(%@ ulasan)";
+"detail.metascore" = "Metascore";
+"detail.release" = "Rilis";
+"detail.playtime" = "Durasi";
+"detail.playtime.value" = "± %d jam";
+"detail.developer" = "Developer";
+"detail.genres" = "Genre";
+"detail.platforms" = "Platform";
+"detail.screenshots" = "Screenshot";
+"detail.about" = "Tentang Gim";
+"detail.about.empty" = "Belum ada deskripsi untuk gim ini.";
+"detail.read.more" = "Baca selengkapnya";
+"detail.read.less" = "Tampilkan lebih sedikit";
+"detail.website" = "Kunjungi situs resmi";
+"detail.favorite.add" = "Tambah ke favorit";
+"detail.favorite.remove" = "Hapus dari favorit";
+"detail.favorite.added" = "Ditambahkan ke Favorit";
+"detail.favorite.removed" = "Dihapus dari Favorit";
+"detail.gallery.close" = "Tutup";
+"detail.gallery.counter" = "%d dari %d";
+
+/* Favorit */
+"favorite.title" = "Favorit";
+"favorite.count" = "%d gim tersimpan";
+"favorite.empty.title" = "Belum ada gim favorit";
+"favorite.empty.message" = "Ketuk ikon hati di halaman detail untuk menyimpan gim di sini.";
+"favorite.delete" = "Hapus";
+
+/* Tentang */
+"about.title" = "Tentang";
+"about.section.profile" = "Biodata";
+"about.email" = "Email";
+"about.city" = "Domisili";
+"about.course" = "Kelas";
+"about.section.app" = "Aplikasi";
+"about.version" = "Versi";
+"about.source" = "Sumber data";
+"about.language" = "Bahasa";
+"about.language.hint" = "Ubah bahasa aplikasi di Pengaturan iOS.";
+"about.photo.accessibility" = "Foto %@";
+
+/* Error */
+"error.no.connection" = "Tidak ada koneksi internet. Periksa jaringan Anda, lalu coba lagi.";
+"error.unauthorized" = "API key RAWG tidak valid atau belum diisi.";
+"error.server" = "Server sedang bermasalah. Coba beberapa saat lagi.";
+"error.decoding" = "Format data dari server tidak dapat dibaca.";
+"error.database" = "Terjadi kesalahan pada penyimpanan lokal.";
+"error.not.found" = "Data tidak ditemukan.";
+"error.invalid.request" = "Permintaan tidak valid.";
+"error.unknown" = "Terjadi kesalahan yang tidak diketahui.";

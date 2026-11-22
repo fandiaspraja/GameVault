@@ -1,0 +1,11 @@
+.DS_Store
+xcuserdata/
+DerivedData/
+*.xcuserstate
+build/
+.build/
+TestResults/
+*.xcresult
+
+# Rahasia: API key RAWG
+Config/Secrets.xcconfig

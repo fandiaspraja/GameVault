@@ -1,0 +1,134 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 1) Build & unit test aplikasi + seluruh modul, beserta laporan code coverage
+  test:
+    name: Build & Test
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Versi Xcode
+        run: xcodebuild -version
+
+      - name: Generate proyek (XcodeGen)
+        run: |
+          brew install xcodegen
+          xcodegen generate
+
+      - name: Pilih simulator iPhone terbaru
+        id: simulator
+        run: |
+          UDID=$(xcrun simctl list devices available --json | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]
+          def version(runtime):
+              return [int(p) for p in runtime.split("iOS-")[-1].split("-") if p.isdigit()]
+          for runtime in sorted((r for r in devices if "iOS" in r), key=version, reverse=True):
+              for device in devices[runtime]:
+                  if device["name"].startswith("iPhone"):
+                      print(device["udid"])
+                      sys.exit(0)
+          sys.exit("Simulator iPhone tidak ditemukan")
+          ')
+          echo "Simulator: $UDID"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
+      - name: Test aplikasi (DI & navigasi antarmodul)
+        run: |
+          mkdir -p TestResults
+          xcodebuild test \
+            -project GameVault.xcodeproj \
+            -scheme GameVault \
+            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -enableCodeCoverage YES \
+            -resultBundlePath TestResults/App.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            -quiet
+
+      - name: Test modul (Common, Game, Detail, Favorite, About)
+        env:
+          UDID: ${{ steps.simulator.outputs.udid }}
+        run: |
+          for module in Common Game Detail Favorite About; do
+            echo "::group::Test modul $module"
+            (cd "Modules/$module" && xcodebuild test \
+              -scheme "$module" \
+              -destination "id=$UDID" \
+              -enableCodeCoverage YES \
+              -resultBundlePath "../../TestResults/$module.xcresult" \
+              -quiet)
+            echo "::endgroup::"
+          done
+
+      - name: Ringkasan code coverage
+        if: always()
+        run: |
+          echo "## Code coverage" >> "$GITHUB_STEP_SUMMARY"
+          for result in TestResults/*.xcresult; do
+            [ -e "$result" ] || continue
+            echo "### $(basename "$result" .xcresult)" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            xcrun xccov view --report --only-targets "$result" >> "$GITHUB_STEP_SUMMARY" || true
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          done
+
+      - name: Simpan hasil test
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults
+          if-no-files-found: ignore
+
+  # 2) Code style
+  lint:
+    name: Code Style (SwiftLint)
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pasang SwiftLint
+        run: brew install swiftlint
+
+      - name: SwiftLint
+        run: swiftlint lint --reporter github-actions-logging
+
+  # 3) Vulnerability: pindai dependensi (Package.resolved) dengan database OSV
+  vulnerability:
+    name: Vulnerability Scan (OSV)
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pasang OSV-Scanner
+        run: brew install osv-scanner
+
+      - name: Pindai dependensi
+        run: |
+          set +e
+          osv-scanner scan source -r --format markdown . > osv-report.md 2> osv-error.log
+          status=$?
+          set -e
+          {
+            echo "## Hasil pemindaian kerentanan (OSV-Scanner)"
+            if [ -s osv-report.md ]; then cat osv-report.md; else echo "Tidak ada kerentanan yang dilaporkan."; fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$status" -eq 1 ]; then
+            echo "::warning::Ditemukan kerentanan pada dependensi. Lihat ringkasan job."
+          elif [ "$status" -ne 0 ]; then
+            echo "::notice::OSV-Scanner selesai dengan kode $status (mis. belum ada Package.resolved)."
+            cat osv-error.log || true
+          fi

@@ -1,0 +1,7 @@
+// Konfigurasi build aplikasi GameVault.
+// API key RAWG TIDAK ditulis di sini. Isi di Config/Secrets.xcconfig
+// (salin dari Secrets.example.xcconfig). File Secrets tidak di-push ke GitHub.
+
+RAWG_API_KEY =
+
+#include? "Secrets.xcconfig"

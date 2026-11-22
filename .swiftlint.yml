@@ -1,0 +1,54 @@
+included:
+  - App
+  - Modules
+
+excluded:
+  - "**/.build"
+  - Modules/*/.build
+  - DerivedData
+  - GameVault.xcodeproj
+
+opt_in_rules:
+  - closure_spacing
+  - empty_count
+  - empty_string
+  - first_where
+  - force_unwrapping
+  - modifier_order
+  - redundant_nil_coalescing
+  - sorted_imports
+  - toggle_bool
+  - vertical_whitespace_closing_braces
+
+analyzer_rules:
+  - unused_declaration
+  - unused_import
+
+line_length:
+  warning: 140
+  error: 200
+  ignores_comments: true
+
+identifier_name:
+  min_length: 2
+  excluded:
+    - id
+
+# Model domain (mis. FavoriteGame, Profile) memiliki 6 properti dengan init publik.
+function_parameter_count:
+  warning: 7
+  error: 10
+
+type_body_length:
+  warning: 300
+  error: 400
+
+file_length:
+  warning: 400
+  error: 600
+
+function_body_length:
+  warning: 60
+  error: 100
+
+reporter: "xcode"

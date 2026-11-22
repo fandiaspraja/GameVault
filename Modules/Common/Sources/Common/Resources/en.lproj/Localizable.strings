@@ -1,0 +1,82 @@
+/* General */
+"general.untitled" = "Untitled";
+"general.tba" = "TBA";
+"general.ok" = "OK";
+"general.error.title" = "Something Went Wrong";
+"general.retry" = "Try Again";
+"general.load.failed" = "Couldn't load data";
+"general.rating.accessibility" = "Rated %@ out of 5";
+
+/* Tabs */
+"tab.home" = "Home";
+"tab.favorite" = "Favorites";
+"tab.about" = "About";
+
+/* Home */
+"home.title" = "GameVault";
+"home.search.prompt" = "Search games…";
+"home.genre.all" = "All";
+"home.sort" = "Sort";
+"home.sort.relevance" = "Relevance";
+"home.sort.popular" = "Most popular";
+"home.sort.rating" = "Top rated";
+"home.sort.newest" = "Newest release";
+"home.sort.name" = "Name (A–Z)";
+"home.empty.search.title" = "No Results";
+"home.empty.search.message" = "No games match “%@”.";
+"home.empty.title" = "No Games Yet";
+"home.empty.message" = "There are no games for this filter.";
+
+/* Detail */
+"detail.title" = "Detail";
+"detail.loading" = "Loading details…";
+"detail.reviews" = "(%@ reviews)";
+"detail.metascore" = "Metascore";
+"detail.release" = "Release";
+"detail.playtime" = "Playtime";
+"detail.playtime.value" = "± %d hrs";
+"detail.developer" = "Developer";
+"detail.genres" = "Genres";
+"detail.platforms" = "Platforms";
+"detail.screenshots" = "Screenshots";
+"detail.about" = "About This Game";
+"detail.about.empty" = "No description available for this game.";
+"detail.read.more" = "Read more";
+"detail.read.less" = "Show less";
+"detail.website" = "Visit official website";
+"detail.favorite.add" = "Add to favorites";
+"detail.favorite.remove" = "Remove from favorites";
+"detail.favorite.added" = "Added to Favorites";
+"detail.favorite.removed" = "Removed from Favorites";
+"detail.gallery.close" = "Close";
+"detail.gallery.counter" = "%d of %d";
+
+/* Favorites */
+"favorite.title" = "Favorites";
+"favorite.count" = "%d saved games";
+"favorite.empty.title" = "No Favorite Games Yet";
+"favorite.empty.message" = "Tap the heart icon on a game's detail page to save it here.";
+"favorite.delete" = "Delete";
+
+/* About */
+"about.title" = "About";
+"about.section.profile" = "Profile";
+"about.email" = "Email";
+"about.city" = "Location";
+"about.course" = "Course";
+"about.section.app" = "App";
+"about.version" = "Version";
+"about.source" = "Data source";
+"about.language" = "Language";
+"about.language.hint" = "Change the app language in iOS Settings.";
+"about.photo.accessibility" = "Photo of %@";
+
+/* Errors */
+"error.no.connection" = "No internet connection. Check your network and try again.";
+"error.unauthorized" = "The RAWG API key is invalid or missing.";
+"error.server" = "The server is having problems. Please try again later.";
+"error.decoding" = "The server response couldn't be read.";
+"error.database" = "Something went wrong with local storage.";
+"error.not.found" = "Data not found.";
+"error.invalid.request" = "Invalid request.";
+"error.unknown" = "An unknown error occurred.";

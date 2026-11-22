@@ -1,0 +1,117 @@
+# Spesifikasi proyek untuk XcodeGen (https://github.com/yonaskolb/XcodeGen)
+# Jalankan `xcodegen generate` di folder ini untuk membuat GameVault.xcodeproj
+name: GameVault
+
+options:
+  bundleIdPrefix: com.dicoding
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+  developmentLanguage: id
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "2.0.0"
+    CURRENT_PROJECT_VERSION: "2"
+    DEVELOPMENT_TEAM: ""
+
+packages:
+  # Modul Core yang dipublish ke GitHub (Swift Package Manager)
+  GameVaultCore:
+    url: https://github.com/fandiaspraja/GameVaultCore.git
+    from: "1.0.0"
+  Swinject:
+    url: https://github.com/Swinject/Swinject.git
+    from: "2.9.0"
+  # Modul lokal (framework per fitur)
+  Common:
+    path: Modules/Common
+  Game:
+    path: Modules/Game
+  Detail:
+    path: Modules/Detail
+  Favorite:
+    path: Modules/Favorite
+  About:
+    path: Modules/About
+
+targets:
+  GameVault:
+    type: application
+    platform: iOS
+    sources:
+      - path: App/Sources
+      - path: App/Resources
+    configFiles:
+      Debug: Config/App.xcconfig
+      Release: Config/App.xcconfig
+    info:
+      path: App/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: GameVault
+        CFBundleDevelopmentRegion: id
+        CFBundleLocalizations: [id, en]
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        RAWG_API_KEY: $(RAWG_API_KEY)
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+    dependencies:
+      - package: GameVaultCore
+      - package: Swinject
+      - package: Common
+      - package: Game
+      - package: Detail
+      - package: Favorite
+      - package: About
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dicoding.GameVault
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+    preBuildScripts:
+      - name: SwiftLint
+        basedOnDependencyAnalysis: false
+        script: |
+          if [[ "$(uname -m)" == arm64 ]]; then
+            export PATH="/opt/homebrew/bin:$PATH"
+          fi
+          if command -v swiftlint >/dev/null 2>&1; then
+            swiftlint lint --config "${SRCROOT}/.swiftlint.yml"
+          else
+            echo "warning: SwiftLint belum terpasang. Lihat README."
+          fi
+
+  GameVaultTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: App/Tests
+    dependencies:
+      - target: GameVault
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.dicoding.GameVaultTests
+
+schemes:
+  GameVault:
+    build:
+      targets:
+        GameVault: all
+        GameVaultTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      coverageTargets:
+        - GameVault
+      targets:
+        - GameVaultTests
